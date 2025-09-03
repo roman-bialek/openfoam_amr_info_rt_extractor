@@ -1,0 +1,4 @@
+simulation_time,total_cells,execution_time,clock_time
+1e-15,132504,0.541706,1
+2e-15,132504,1.060614,2
+3e-15,125896,1.760276,3
