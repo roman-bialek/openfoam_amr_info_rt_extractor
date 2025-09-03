@@ -1,0 +1,156 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  10
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 10
+Exec   : ExecSolverName -parallel
+Date   : day/month/year
+Time   : 12:34:56
+Host   : "host"
+PID    : PIDisPID
+I/O    : uncollated
+Case   : location
+nProcs : 32
+Slaves : 
+31
+(
+"cores"
+)
+
+Pstream initialised with:
+    floatTransfer      : 0
+    nProcsSimpleSum    : 0
+    commsType          : nonBlocking
+    polling iterations : 0
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Selecting fvMeshTopoChanger refiner
+Selecting fvMeshDistributor distributor
+Selecting distributor hierarchical
+Selecting decompositionConstraint refinementHistory
+refinementHistory : setting constraints to preserve refinement history
+
+PIMPLE: No convergence criteria found
+
+
+PIMPLE: Operating solver in transient mode with 1 outer corrector
+PIMPLE: Operating solver in PISO mode
+
+
+Reading field p_rgh
+
+Reading field U
+
+Reading/calculating face flux field phi
+
+Constructing compressibleMultiphaseMixture
+
+Selecting thermodynamics package 
+{
+    type            heRhoThermo;
+    mixture         pureMixture;
+    transport       const;
+    thermo          hConst;
+    equationOfState perfectFluid;
+    specie          specie;
+    energy          sensibleInternalEnergy;
+}
+
+Using dynamicCode for codedBase heRhoThermo_pureMixture_const_hConst_perfectFluid_specie___sensibleInternalEnergy___ at line 17 in "/opt/apps/apps/gcc/openfoam/10/OpenFOAM-10/etc/codeTemplates/dynamicCode/rhoThermo"
+Selecting thermodynamics package 
+{
+    type            heRhoThermo;
+    mixture         pureMixture;
+    transport       const;
+    thermo          eConst;
+    equationOfState perfectFluid;
+    specie          specie;
+    energy          sensibleInternalEnergy;
+}
+
+Using dynamicCode for codedBase heRhoThermo_pureMixture_const_eConst_perfectFluid_specie___sensibleInternalEnergy___ at line 17 in "/opt/apps/apps/gcc/openfoam/10/OpenFOAM-10/etc/codeTemplates/dynamicCode/rhoThermo"
+
+Reading g
+
+Reading hRef
+Calculating field g.h
+
+Calculating face flux phiH
+
+Selecting turbulence model type laminar
+Selecting laminar stress model Stokes
+Creating field kinetic energy K
+
+No MRF models present
+
+No fvModels present
+No fvConstraints present
+Constructing face velocity Uf
+
+Courant Number mean: 0 max: 0
+
+Starting time loop
+
+Using dynamicCode for coded refineFunc at line 4 in "location"
+Creating refineField_
+Courant Number mean: 0 max: 0
+Interface Courant Number mean: 0 max: 0
+Time = 1e-15s
+
+MULES: Solving for alpha.air
+air volume fraction, min, max = 0.005416666667 0 1
+MULES: Solving for alpha.GaInSn
+GaInSn volume fraction, min, max = 0.9945833333 0 1
+Phase-sum volume fraction, min, max = 1 1 1
+
+ExecutionTime = 0.541706 s  ClockTime = 1 s
+
+Courant Number mean: 3.584593071e-24 max: 1.252415872e-21
+Interface Courant Number mean: 0 max: 0
+Selected 2472 cells for refinement out of 115200.
+Refined from 115200 to 132504 cells.
+Selected 0 split points out of a possible 2472.
+Time = 2e-15s
+
+Execution time for mesh.update() = 5e-06 s
+GAMGPCG:  Solving for pcorr, Initial residual = 0, Final residual = 0, No Iterations 0
+Corrected phi for Dilation
+time step continuity errors : sum local = 3.40714736e-23, global = 6.529738706e-26, cumulative = 6.529738706e-26
+
+ExecutionTime = 1.060614 s  ClockTime = 2 s
+
+Courant Number mean: 1.296028009e-23 max: 1.232070792e-20
+Interface Courant Number mean: 0 max: 0
+Selected 0 cells for refinement out of 132504.
+Selected 944 split points out of a possible 2472.
+Unrefined from 132504 to 125896 cells.
+Redistributing mesh with imbalance 1.068124047
+refinementHistory add : found refinementHistory
+refinementHistory add : adding refinementHistory 
+--> FOAM Warning : 
+    From function static void Foam::hierarchGeomDecomp::findBinary(Foam::label, const Foam::List<double>&, const Foam::List<double>&, Foam::label, Foam::scalar, Foam::scalar, Foam::scalar, Foam::label&, Foam::scalar&)
+    in file hierarchGeomDecomp/hierarchGeomDecomp.C at line 316
+    unable to find desired decomposition split, making do!
+refinementHistory apply : found refinementHistory
+refinementHistory apply : adding refinementHistory 
+Time = 3e-15s
+
+Execution time for mesh.update() = 7e-06 s
+GAMGPCG:  Solving for pcorr, Initial residual = 0.9978984441, Final residual = 7.507281964e-13, No Iterations 49
+Corrected phi for Dilation
+
+ExecutionTime = 1.760276 s  ClockTime = 3 s
+
+End
+
+Finalising parallel run
