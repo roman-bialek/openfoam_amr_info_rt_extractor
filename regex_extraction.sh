@@ -1,6 +1,7 @@
 
+fp_src=$(dirname "$0") # cheap relative-pathing fix
 
-# make the headers of the csv
+
 log_file=$1; #log.solver # <---- change this
 refinement_interval=$2 # 10
 
@@ -35,7 +36,7 @@ grep -oP '(?<=^Time = )[+\-]?(\d+\.\d*|\d*\.\d+|\d+)([eE][+\-]?\d+)?' $log_file 
 echo ""
 echo "(python 1: warning is slower than grep's)"
 
-python cell_regex.py ${log_file} \
+python ${fp_src}/cell_regex.py ${log_file} \
         -o edge_case_out.log \
         --verbose
 
@@ -44,7 +45,7 @@ echo ""
 
 # Fix tmp_total_cells
 echo "(python 2: duplicate columns)"
-python duplicate_columns.py edge_case_out.log ${refinement_interval} # returns file `tmp_total_cell_fixed`
+python ${fp_src}/duplicate_columns.py edge_case_out.log ${refinement_interval} # returns file `tmp_total_cell_fixed`
 
 echo "total_cell" > tmp_add_header
 cat tmp_add_header tmp_total_cell_fixed > tmp_total_cells
