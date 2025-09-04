@@ -1,3 +1,4 @@
 
 
-bash ./regex_extraction.sh test.log
+bash ./regex_extraction.sh test.log \
+        1

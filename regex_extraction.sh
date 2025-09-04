@@ -2,7 +2,7 @@
 
 # make the headers of the csv
 log_file=$1; #log.solver # <---- change this
-refinement_interval=10
+refinement_interval=$2 # 10
 
 
 echo "simulation_time" > tmp_simtime
