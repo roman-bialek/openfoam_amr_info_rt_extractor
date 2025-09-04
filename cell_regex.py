@@ -4,6 +4,7 @@ import argparse
 import re
 
 if __name__ == "__main__":
+    print("[cell_regex.py]: (Program started)")
     parser = argparse.ArgumentParser()
     parser.add_argument("filename", help="input file name", default="log.solver")
     parser.add_argument("--debug", required=False, help="debug outputs", default=False)
@@ -35,8 +36,10 @@ if __name__ == "__main__":
     f = open(fp, "r")
     f_out = open(fp_out, "w")
 
-    counter_simtime = 0
-    counter_cells = 0
+    counter_simtime_total = 0 # total times 'simtime' is found
+
+    counter_simtime_corresponding = 0 # 'simtime' with matching cell count
+    counter_cells = 0 # count for matching 'total cells' line
 
     if (b_debug_simtime):
         f_time = open(fp_simtime, 'w')
@@ -82,7 +85,8 @@ if __name__ == "__main__":
             if (b_debug_simtime):
                 f_time.write(match_simtime.group(0) + "\n")
 
-            counter_simtime += 1
+            counter_simtime_total += 1
+            counter_simtime_corresponding += 1
             break
         #end if
     #end while
@@ -108,7 +112,7 @@ if __name__ == "__main__":
         match_simtime = re.search(sim_time_matcher, line)
         b_is_simtime = bool(match_simtime)
         if b_is_simtime:
-            counter_simtime += 1 # added on hack for verbosity
+            counter_simtime_total += 1 # added on hack for verbosity
 
         if b_is_simtime and flag_lock_simtime:
             # >(A) Lock flag: see `>(B)`
@@ -117,10 +121,11 @@ if __name__ == "__main__":
 
             last_line_read = count_lines
             counter_cells += 1
+            counter_simtime_corresponding += 1
 
             if (b_debug_simtime):
                 f_time.write(match_simtime.group(0) + "\n")
-                # counter_simtime += 1
+                # counter_simtime_total += 1
                 f_line.write(str(count_lines) + "\n")
 
             #end if
@@ -143,22 +148,24 @@ if __name__ == "__main__":
     #end while
     # > At end of read, likely will have mismatch:
     #   however, handle early termination:
-    if (b_debug_simtime):
-        if counter_simtime == (counter_cells + 1):
-            f_out.write(latest_cell_count_text)
-            # Assumes last read was successful
+    # expected_ri = (counter_simtime_total - 1) / (counter_cells)
+    if False: # counter_simtime_corresponding == (counter_cells + 1):
+        print("(assuming successful finish, correcting last missing cell count...)")
+        f_out.write(latest_cell_count_text + "\n")
+        ## Issue is with duplication line; refactor the shell script to get it working smoothly
+        # Assumes last read was successful
 
     if (b_debug_print_info):
         print(f"lines read: {count_lines}")
         print(f"Last line read: {last_line_read}")
         print(f"Refinement lines read: {counter_cells}")
-        print(f"Time lines read: {counter_simtime}")
-        expected_ri = (counter_simtime-1) / (counter_cells)
+        print(f"Time lines read: {counter_simtime_total}")
+        expected_ri = (counter_simtime_total-1) / (counter_cells)
         print(f"Expected refinement interval ~ {expected_ri}")
     f.close()
     f_out.close()
     if (b_debug_simtime):
         f_time.close()
     #end if
-
+    print("[cell_regex.py]: (Program ended, exit 0)")
         
